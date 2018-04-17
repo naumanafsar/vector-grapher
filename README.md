@@ -1,1 +1,1 @@
-# victor-grapher
+# Victor Grapher
