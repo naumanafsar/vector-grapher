@@ -25,6 +25,9 @@ void fun(string str)
 	double var = 2;
 	long double finalValue = 0;
 	long double multiply = 1;
+	long double sinValue = 0;
+	long double cosValue = 0;
+	long double tanValue = 0;
 	regex reg1 ("sin");
 	regex reg2 ("cos");
 	regex reg3 ("tan");
