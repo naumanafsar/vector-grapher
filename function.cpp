@@ -3,14 +3,16 @@
 #include<sstream>
 #include<string>
 #include<regex>
+#include<vector>
 #include"poly.cpp"
+#include"fraction.cpp"
 //#include"trignometric.cpp"
 using namespace std;
 
 string string_to_subString(string str, int start );
-double string_to_int(string str);
 string reverseString(string s);
 string int_to_string(int num);
+double angle(string str, int start);
 long double tangent(double valx);
 long double cosine(double valx);
 long double sine(double valx);
@@ -23,9 +25,6 @@ void fun(string str)
 	double var = 2;
 	long double finalValue = 0;
 	long double multiply = 1;
-	long double sinValue = 0;
-	long double cosValue = 0;
-	long double tanValue = 0;
 	regex reg1 ("sin");
 	regex reg2 ("cos");
 	regex reg3 ("tan");
@@ -55,51 +54,21 @@ void fun(string str)
 			cout<<newStr<<endl;
 			if(regex_search(newStr ,reg1))
 			{
-				int i = 3;
-				string strnum = "";
-				while(newStr[i] != '(')
-				{
-					strnum = newStr[i];
-					i++;
-					
-				}
-				double num = 1; 
-				num = string_to_int(strnum);
-				//trignometric t;
+				var *= angle(newStr,3);
 				sinValue = sine(var);
 				cout<<"sinvalue : "<<sinValue<<endl;
 				multiply *= sinValue;
 			} 
 			else if(regex_search(newStr ,reg2))
 			{
-				int i = 3;
-				string strnum = "";
-				while(newStr[i] != '(')
-				{
-					strnum = newStr[i];
-					i++;
-					
-				}
-				double num = 1;
-				num = string_to_int(strnum);
-				//trignometric t;
+				var *= angle(newStr,3);
 				cosValue = cosine(var);
 				cout<<"cosValue = "<<cosValue<<endl;
 				multiply *= cosValue;
 			} 
 			else if(regex_search(newStr ,reg3))
 			{
-				int i = 3;
-				string strNum = "";
-				while(newStr[i] != '(')
-				{
-					strNum = newStr[i];
-					i++;
-					
-				}
-				double num = 1;
-				num = string_to_int(strNum);
-				//trignometric t;
+				var *= angle(newStr,3);
 				tanValue = tangent(var);
 				cout<<"tanValue = "<<tanValue<<endl;
 				multiply *= tanValue; 
@@ -107,26 +76,7 @@ void fun(string str)
 			
 			else if(regex_search(newStr, reg5))
 			{
-				int count = 0;
-				if(regex_match(newStr,reg6))
-				{
-					count += 1;
-				}
-				int i = 2;
-				string strNum = "";
-				while(newStr[i] != '\0')
-				{
-					strNum += newStr[i];
-					i++;
-				}
-				double num = string_to_int(strNum);
-				double pow = num;
-				if(count == 1)
-				{
-					//22/100
-					double denum = string_to_int(string_to_subString(strNum,((int_to_string(string_to_int(strNum))).length())+1));
-					pow = num / denum;
-				}
+				double pow = angle(newStr,2);
 				poly p(var,pow);
 				multiply *= p.value(var);	
 			}
@@ -164,14 +114,6 @@ string string_to_subString(string str, int start )
 	return newstr;
 }
 
-
-double string_to_int(string str)
-{
-	stringstream geek(str);
-	double num;
-	geek >> num;
-	return num;
-}
 
 string int_to_string(int num)
 {
@@ -266,6 +208,34 @@ long double tangent(double valx)
 
 }
 
+double angle(string str, int start)
+{
+	int count = 0;
+	int i = start;
+	string strNum = "";
+	while(str[i] != '(' && str[i] !='\0')
+	{
+		if(str[i] == '/')
+		{
+			count += 1;
+		}
+		strNum += str[i];
+		i++;
+		
+	}
+	double pow = 1;
+	if(strNum.size() > 0)
+	{
+		double num = string_to_int(strNum);
+		pow = num;
+		if(count == 1)
+		{
+			double denum = string_to_int(string_to_subString(strNum,((int_to_string(string_to_int(strNum))).length())+1));
+			pow = num / denum;
+		}
+	}
+	return pow;
+}
 
 
 
@@ -273,6 +243,6 @@ long double tangent(double valx)
 
 int main()
 {
-	fun("3/2+5/2*x^2+sin(t)*cos(t)+tan(t)");
+	fun("3/2+5/2*x^2+sin(t)*cos2/3(t)+tan(t)");
 	return 0;
 }
