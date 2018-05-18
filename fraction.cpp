@@ -47,7 +47,7 @@ class fraction
 		void operator -=(fraction fract);
 		void operator *=(fraction fract);
 		void operator /=(fraction fract);
-		long double result(double x);
+		long double result(double num, double denum);
 		
 };
 
@@ -439,7 +439,7 @@ void fraction::operator /= (fraction fract)
 	simplfy();
 }
 
-long double fraction::result(double x)
+long double fraction::result(double num, double denum)
 {
 	return numerator/denumerator;
 } 
