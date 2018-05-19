@@ -1,7 +1,12 @@
 #include<iostream>
+#include"func.cpp"
 using namespace std;
 
-typedef long double (*f)(double,double);
+
+
+/////////////////////////////////////////////////////////////////////
+
+typedef long double (func::*f)(double,double);
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -231,13 +236,14 @@ long double linklist::get(double num, double specail)
 	long double final_value = 0;
 	if(head == NULL)
 	{
-		cout<<"linklist is empty"<<endl;
+		cout<<"Invalid Expression "<<endl;
 	}
 	else
 	{
 		Node *temp;
 		temp = head;
 		f function;
+		func p;
 		long double mul = 1;
 		while(temp != NULL)
 		{
@@ -246,17 +252,17 @@ long double linklist::get(double num, double specail)
 				if(temp->power != -1)
 				{
 					function = temp->data;
-					mul *= function(num,temp->power); 
+					mul *= (p.*function)(num,temp->power); 
 				}	
 				else if(temp->num != -1 && temp->denum != 0)
 				{
 					function = temp->data;
-					mul *= function(temp->num, temp->denum);
+					mul *= (p.*function)(temp->num, temp->denum);
 				}
 				else
 				{
 					function= temp->data;
-					mul *= function(num*temp->angle,specail);
+					mul *= (p.*function)(num*temp->angle,specail);
 				}
 			}
 			if(temp->change == 1)
@@ -264,22 +270,19 @@ long double linklist::get(double num, double specail)
 				if(temp->power != -1)
 				{
 					function = temp->data;
-					mul *= function(num,temp->power);
-					cout<<mul<<endl;
+					mul *= (p.*function)(num,temp->power);
 				}	
 				else if(temp->num != -1 && temp->denum != 0)
 				{
 					function = temp->data;
-					mul *= function(temp->num, temp->denum);
+					mul *= (p.*function)(temp->num, temp->denum);
 				}
 				else
 				{
 					function= temp->data;
-					mul *= function(num*temp->angle,specail);
+					mul *= (p.*function)(num*temp->angle,specail);
 				}
-				cout<<mul<<endl;
 				final_value += mul;
-				cout<<final_value<<endl;
 				mul = 1;
 			}
 			temp = temp->next;
@@ -335,62 +338,6 @@ void linklist::updateAngle(double ang)
 }
 
 
-/////////////////////////////////////////////////////////////////////////
-
-
-
-
-long double fun1(double a, double b)
-{
-	return a - b;
-}
 
 
 /////////////////////////////////////////////////////////////////////////
-
-
-
-
-long double fun2(double a,double b)
-{
-	return a + b;
-}
-
-
-/////////////////////////////////////////////////////////////////////////
-
-
-
-long double fraction(double num, double denum)
-{
-	return num/denum;
-}
-
-/////////////////////////////////////////////////////////////////////////
-/*
-long double value(double var, double pow)
-{
-	int power = pow;
-	int val = 1;
-	for(int i = 1; i <= power; i++)
-	{
-		val *= var;
-	}
-	return  val;
-}
-
-
-int main()
-{
-	linklist l;
-	l.addInTheEnd(&fun1);
-	l.addInTheEnd(&fun2);
-	l.updateChange();
-	l.addInTheEnd(&fun1);
-	l.addInTheEnd(&value);
-	l.updatePower(2);
-	l.display();
-	cout<<l.get(3,2)<<endl;
-	return 0;
-}
-*/

@@ -5,18 +5,7 @@
 #include<regex>
 #include"linklist.cpp"
 using namespace std;
-
-string string_to_subString(string str, int start );
-int string_to_int(string str);
-string int_to_string(int num);
-long double factorial(int x);
-long double power(long double num1, int powr);
-double angle(string str, int start);
-long double tangent(double valx, double pow);
-long double cosine(double valx, double pow);
-long double sine(double valx, double pow);
-long double result(double num, double denum);
-long double value(double var, double pow);
+	
 
 
 /////////////////////////////////////////////////////////////////////////
@@ -26,15 +15,19 @@ class point
 	private:
 		linklist l;
 	public:
-		void fun(string str);
-		long double getFinal(double start, double end);
+		void generateLinkList(string str);
+		long double getFinalValue(double start, double end);
 		void show();
+		string string_to_subString(string str, int start );
+		int string_to_int(string str);
+		string int_to_string(int num);
+		double angle(string str, int start);
 };
 
 /////////////////////////////////////////////////////////////////////////
 
 
-void point:: fun(string str)
+void point:: generateLinkList(string str)
 {
 	double var = 2;
 	long double finalValue = 0;
@@ -66,23 +59,23 @@ void point:: fun(string str)
 			getline(filex,newStr,'*');
 			if(regex_search(newStr ,reg1))
 			{
-				l.addInTheEnd(&sine);
+				l.addInTheEnd(&func::sine);
 				l.updateAngle(angle(newStr,3));
 			} 
 			else if(regex_search(newStr ,reg2))
 			{
-				l.addInTheEnd(&cosine);
+				l.addInTheEnd(&func::cosine);
 				l.updateAngle(angle(newStr,3));
 			} 
 			else if(regex_search(newStr ,reg3))
 			{
-				l.addInTheEnd(&tangent);
+				l.addInTheEnd(&func::tangent);
 				l.updateAngle(angle(newStr,3));
 			}
 	
 			else if(regex_search(newStr, reg5))
 			{
-				l.addInTheEnd(&value);
+				l.addInTheEnd(&func::value);
 				l.updatePower(angle(newStr,2));
 			}
 	
@@ -93,7 +86,7 @@ void point:: fun(string str)
 				if(denumerator == 0)
 					cout<<"Enter a valid "<<endl;
 				else
-					l.addInTheEnd(&result);
+					l.addInTheEnd(&func::result);
 					l.updateFraction(numerator,denumerator);
 			
 			}
@@ -111,7 +104,7 @@ void point:: fun(string str)
 
 
 
-long double point::getFinal(double start, double end)
+long double point::getFinalValue(double start, double end = 0)
 {
 	return l.get(start,end);
 }
@@ -131,7 +124,7 @@ void point::show()
 
 /////////////////////////////////////////////////////////////////////////
 
-string string_to_subString(string str, int start )
+string point:: string_to_subString(string str, int start )
 {
 	string newstr = "";
 	while(str[start] != '\0')
@@ -145,7 +138,7 @@ string string_to_subString(string str, int start )
 /////////////////////////////////////////////////////////////////////////
 
 
-int string_to_int(string str)
+int point:: string_to_int(string str)
 {
 	stringstream geek(str);
 	int num;
@@ -160,7 +153,7 @@ int string_to_int(string str)
 
 
 
-string int_to_string(int num)
+string point:: int_to_string(int num)
 {
 	stringstream ss;
 	ss << num;
@@ -176,7 +169,7 @@ string int_to_string(int num)
 
 
 
-double angle(string str, int start)
+double point:: angle(string str, int start)
 {
 	int count = 0;
 	int i = start;
@@ -209,164 +202,27 @@ double angle(string str, int start)
 
 
 
-/////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-long double power(long double num1, int powr)
-{
-  long double ans = 1;
-  for (int i = 0; i < powr; i++)
-  {
-    ans *= num1;
-  }
-  //std::cout << num1 << " to the power " << powr << " is " <<ans << '\n';
-  return ans;
-}
-
 
 
 
 /////////////////////////////////////////////////////////////////////////
 
 
-
-long double factorial(int x)
-{
-  long double ans = 1;
-  for (size_t i = 1; i <= x; i++)
-  {
-    ans = ans*i;
-  }
-  //std::cout << "factorial is " << ans << '\n';
-  return ans;
-}
-
-
-
-
-/////////////////////////////////////////////////////////////////////////
-
-
-
-
-long double cosine(double valx, double pow)
-{
-  double sign = 1;
-  while (valx > 360)
-  {
-    valx -= 360;
-  }
-  long double x = valx*3.14159265358979323846/180;
-  long double qoutient;
-  long double denomenator;
-  long double ans = 0;
-  for(int n = 0; n <= 60; n++)
-    {
-      qoutient = power(-1,n)*power(x,2*n);
-      denomenator = factorial(2*n);
-      ans += qoutient/denomenator;
-    }
-    // if (ans < 0000.1 && ans > -0000.1)
-    // {
-    //   ans = 0;
-    // }
-    return ans;
-}
-
-
-
-
-
-/////////////////////////////////////////////////////////////////////////
-
-
-
-
-
-long double sine(double valx, double pow)
-{
-  double sign = 1;
-  while (valx > 360)
-  {
-    valx -= 360;
-  }
-  long double x = valx*3.14159265358979323846/180;
-  long double qoutient;
-  long double denomenator;
-  long double ans = 0;
-  for(int n = 0; n <= 60; n++)
-  {
-      qoutient = power(-1,n)*power(x,2*n+1);
-      denomenator = factorial((2*n)+1);
-      ans += qoutient/denomenator;
-    }
-    // if (ans < 0000000.1 && ans > -00000000.1)
-    // {
-    //   ans = 0;
-    // }
-    return ans;
-}
-
-
-
-/////////////////////////////////////////////////////////////////////////
-
-
-
-long double tangent(double valx, double pow)
-{
-  return sine(valx,pow)/cosine(valx,pow);
-
-}
-
-
-
-
-/////////////////////////////////////////////////////////////////////////
-
-
-
-
-long double value(double var, double pow)
-{
-	int power = pow;
-	int val = 1;
-	for(int i = 1; i <= power; i++)
-	{
-		val *= var;
-	}
-	return  val;
-}
-
-
-
-
-/////////////////////////////////////////////////////////////////////////
-
-
-
-
-long double result(double num, double denum)
-{
-	return num/denum;
-} 
-
-
-
-
-/////////////////////////////////////////////////////////////////////
 
 
 //double string_to_decimal(string str)
 
 int main()
 {
-	point f;
-	f.fun("x^3+cos(t)*tan2(t)+3/2");
-	f.show();
-	cout<<f.getFinal(2,3)<<endl;
+	point x;
+	point y;
+	point z;
+	x.generateLinkList("sin(t)");
+	y.generateLinkList("cos(t)");
+	z.generateLinkList("x^1");
+	//f.show();
+	cout<<x.getFinalValue(2)<<endl;
+	cout<<y.getFinalValue(2)<<endl;
+	cout<<z.getFinalValue(2)<<endl;
 	return 0;
 }
