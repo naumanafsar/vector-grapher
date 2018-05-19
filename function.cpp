@@ -27,59 +27,59 @@ class point
 /////////////////////////////////////////////////////////////////////////
 
 
+
+
 void point:: generateLinkList(string str)
 {
-	double var = 2;
 	long double finalValue = 0;
-	regex reg1 ("sin");
-	regex reg2 ("cos");
-	regex reg3 ("tan");
-	regex reg4 ("([0-9]+)[/]([0-9]+)");
-	regex reg5 ("([a-z])[^]");
-	regex reg6 ("([a-z])[^]([0-9]+)[/]([0-9]+)");
-	string newStr = "";
+	regex regSin ("sin");
+	regex regCos ("cos");
+	regex regTan ("tan");
+	regex regFract ("([0-9]+)[/]([0-9]+)");
+	regex regPoly ("([a-z])[^]");
 	fstream outfile;
-	outfile.open("file.txt", ios::out);
+	outfile.open("plus.txt", ios::out);
 	outfile<<str;
 	outfile.close();
 	fstream infile;
-	infile.open("file.txt", ios::in);
+	infile.open("plus.txt", ios::in);
 	while(!infile.eof())
 	{
-		string str1;
+		string str1 = "";
 		getline(infile,str1,'+');
-		fstream file;
-		file.open("x.txt",ios::out);
-		file<<str1;
-		file.close();
-		fstream filex;
-		filex.open("x.txt",ios::in);
-		while(!filex.eof())
+		fstream outoutfile;
+		outoutfile.open("multiply.txt",ios::out);
+		outoutfile<<str1;
+		outoutfile.close();
+		fstream ininfile;
+		ininfile.open("multiply.txt",ios::in);
+		while(!ininfile.eof())
 		{
-			getline(filex,newStr,'*');
-			if(regex_search(newStr ,reg1))
+			string newStr = "";
+			getline(ininfile,newStr,'*');
+			if(regex_search(newStr ,regSin))
 			{
 				l.addInTheEnd(&func::sine);
 				l.updateAngle(angle(newStr,3));
 			} 
-			else if(regex_search(newStr ,reg2))
+			else if(regex_search(newStr ,regCos))
 			{
 				l.addInTheEnd(&func::cosine);
 				l.updateAngle(angle(newStr,3));
 			} 
-			else if(regex_search(newStr ,reg3))
+			else if(regex_search(newStr ,regTan))
 			{
 				l.addInTheEnd(&func::tangent);
 				l.updateAngle(angle(newStr,3));
 			}
 	
-			else if(regex_search(newStr, reg5))
+			else if(regex_search(newStr, regPoly))
 			{
 				l.addInTheEnd(&func::value);
 				l.updatePower(angle(newStr,2));
 			}
 	
-			else if(regex_match(newStr, reg4))
+			else if(regex_match(newStr, regFract))
 			{
 				double numerator = string_to_int(newStr);
 				double denumerator = string_to_int(string_to_subString(newStr,((int_to_string(string_to_int(newStr))).length())+1));
@@ -91,7 +91,7 @@ void point:: generateLinkList(string str)
 			
 			}
 		}
-		filex.close();
+		ininfile.close();
 		l.updateChange();
 	}
 	infile.close();
@@ -208,9 +208,6 @@ double point:: angle(string str, int start)
 /////////////////////////////////////////////////////////////////////////
 
 
-
-
-//double string_to_decimal(string str)
 
 int main()
 {
