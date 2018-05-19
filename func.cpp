@@ -34,6 +34,10 @@ long double func:: cosine(double valx, double pow)
       denomenator = factorial(2*n);
       ans += qoutient/denomenator;
     }
+  if (ans < 0.001 && ans > -0.001)
+    {
+      ans = 0;
+    }
     return ans;
 }
 
