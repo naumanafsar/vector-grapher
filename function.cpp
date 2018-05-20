@@ -18,6 +18,8 @@ class point
 		void generateLinkList(string str);
 		long double getFinalValue(double start, double end);
 		void show();
+		void makingPointsFile(point &x, point &y, point &z, double start, double end);
+		void generate(point &x, point &y, point &z, string a, string b, string c );
 		string string_to_subString(string str, int start );
 		int string_to_int(string str);
 		string int_to_string(int num);
@@ -163,6 +165,19 @@ string point:: int_to_string(int num)
 
 
 
+///////////////////////////////////////////////////////////////////////////
+
+
+/*
+long double point::string_to_float(string str)
+{
+	int  num = string_to_int(str);
+	int point = string_to_subString(str,int_to_string(num).length+1);
+	
+}
+
+*/
+
 
 /////////////////////////////////////////////////////////////////////////
 
@@ -201,25 +216,47 @@ double point:: angle(string str, int start)
 
 
 
+void point::generate(point &x, point &y, point &z, string a, string b, string c )
+{
+	x.generateLinkList(a);
+	y.generateLinkList(b);
+	z.generateLinkList(c);
+	return;
+}
+
+void point::makingPointsFile(point &x, point &y, point &z, double start, double end)
+{
+	fstream outfile;
+	outfile.open("file.txt",ios::out);
+	//long double Z = -50;
+	for(double i = start; i < 10000; i += 0.1)
+	{
+		long double X = 70*x.getFinalValue(i);
+		long double Y = 70*y.getFinalValue(i);
+		long double Z = z.getFinalValue(i);
+		outfile<<X<<" ";
+		outfile<<Y<<" ";
+		outfile<<Z<<" ";
+		
+	}
+	return;
+}
 
 
 
 
 /////////////////////////////////////////////////////////////////////////
 
-
+/*
 
 int main()
 {
 	point x;
 	point y;
 	point z;
-	x.generateLinkList("sin(t)");
-	y.generateLinkList("cos(t)");
-	z.generateLinkList("x^1");
-	//f.show();
-	cout<<x.getFinalValue(2)<<endl;
-	cout<<y.getFinalValue(2)<<endl;
-	cout<<z.getFinalValue(2)<<endl;
+	point p;
+	p.generate(x,y,z,"sin(t)","cos(t)","t^1");
+	p.makingPointsFile(x,y,z,0,50);
 	return 0;
 }
+*/
