@@ -13,6 +13,8 @@
 #include <FL/glut.H>
 #include <FL/Fl_Double_Window.H>
 #include <GL/glu.h>
+#include <function.cpp>
+#include <fstream>
 
 using namespace std;
 
@@ -118,11 +120,17 @@ public:
    glPushMatrix();
    glColor3f(1,0,0);
    glBegin(GL_POINTS);
-   for(ang = 0; ang < 10 * 3.14; ang += .5) {
-   x1 = 70 *sin(ang);
-   y1 = 70 *cos(ang);
-   z1 += .75;
-   glVertex3f(x1,y1,z1);
+   fstream infile;
+   infile.open("file.txt",ios::in);
+   while(!infile.eof()) {
+     long double x;
+     long double y;
+     long double z;
+     infile>>x;
+     infile>>y;
+     infile>>z;
+     //cout<<x<<endl;
+     glVertex3f(x,y,z);
    }
 
    glEnd();
@@ -183,10 +191,13 @@ Fl_Input *zAxis;
    strX = xAxis->value();
    strY = yAxis->value();
    strZ = zAxis->value();
-   std::cout << strX <<"haha"<< '\n';
-   std::cout << strY <<"haha"<< '\n';
-   std::cout << strZ <<"haha"<< '\n';
-
+   point a;
+   point b;
+   point c;
+   point p;
+   p.generate(a,b,c,strX,strY,strZ);
+ 	 p.makingPointsFile(a,b,c,-100,100);
+   computeCurve();
  }
 int main(int argc, char **argv) {
 
