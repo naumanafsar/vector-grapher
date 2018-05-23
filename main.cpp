@@ -152,6 +152,42 @@ public:
  //   cout << "The Button Was Clicked!.." << endl;
  // }
 
+   glEnd();
+   glEnd();
+
+ // Draw the x/y/z axis
+   glBegin(GL_LINE_STRIP);
+   glColor3f(1, 0, 0);
+   glVertex3f(0, 0, 0);
+   glVertex3f(40, 0, 0);
+   glVertex3f(0, 0, 0);
+   glColor3f(0, 1, 0);
+   glVertex3f(0, 0, 0);
+   glVertex3f(0, 40, 0);
+   glVertex3f(0, 0, 0);
+   glColor3f(0, 0, 1);
+   glVertex3f(0, 0,  0);
+   glVertex3f(0, 0, 40);
+   glEnd();
+
+   glEndList();
+ }
+
+ /**********************************************************************************************************************************/
+Fl_Input *xAxis;
+Fl_Input *yAxis;
+Fl_Input *zAxis;
+ void genGraphfun(Fl_Widget*w) {
+   cout << "The Button Was Clicked!.." << endl;
+   string strX,strY,strZ;
+   strX = xAxis->value();
+   strY = yAxis->value();
+   strZ = zAxis->value();
+   std::cout << strX <<"haha"<< '\n';
+   std::cout << strY <<"haha"<< '\n';
+   std::cout << strZ <<"haha"<< '\n';
+
+ }
 int main(int argc, char **argv) {
 
   Fl_Window* wind = new Fl_Window(20,62,800,500,"Vector Grapher");
@@ -168,17 +204,23 @@ int main(int argc, char **argv) {
         Fl_Button *rotLeft = new Fl_Button(325, 382, 92, 30, "Rotate Left");
 
 
+
         Fl_Input *xAxis = new Fl_Input(540, 62, 250, 40, "Enter X-axis: ");
         Fl_Input *yAxis = new Fl_Input(540, 105, 250, 40, "Enter Y-axis: ");
         Fl_Input *zAxis = new Fl_Input(540, 150, 250, 40, "Enter Z-axis: ");
 
         Fl_Button *genGraph = new Fl_Button(570, 192, 160, 30, "Generate Graph");
         // genGraph->callback(genGraph);
+        xAxis = new Fl_Input(540, 62, 250, 40, "Enter X-axis: ");
+        yAxis = new Fl_Input(540, 105, 250, 40, "Enter Y-axis: ");
+        zAxis = new Fl_Input(540, 150, 250, 40, "Enter Z-axis: ");
+
+        Fl_Button *genGraph = new Fl_Button(570, 192, 160, 30, "Generate Graph");
+        genGraph->callback(genGraphfun);
 
 
         genGraph->type(FL_NORMAL_BUTTON);
         yAxis->value(xAxis->value());
-
 
       }
       grp1->labelsize(14);
