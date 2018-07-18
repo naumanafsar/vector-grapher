@@ -17,6 +17,7 @@
 
 using namespace std;
 
+#include <cmath>
 
 class MyGlWindow : public Fl_Gl_Window {
   void draw();
