@@ -140,6 +140,43 @@ long double point::getFinalValue(double start, double end = 0)
 
 
 
+
+
+
+
+
+void point::generate(point &x, point &y, point &z, string a, string b, string c )
+{
+	x.generateLinkList(a);
+	y.generateLinkList(b);
+	z.generateLinkList(c);
+	return;
+}
+
+void point::makingPointsFile(point &x, point &y, point &z, double start, double end)
+{
+	fstream outfile;
+	outfile.open("file.txt",ios::out);
+	//long double Z = -50;
+	for(double i = start; i < end; i += 0.1)
+	{
+		long double X = x.getFinalValue(i);
+		long double Y = y.getFinalValue(i);
+		long double Z = z.getFinalValue(i);
+		outfile<<X<<" ";
+		outfile<<Y<<" ";
+		outfile<<Z<<" ";
+
+	}
+	return;
+}
+
+
+
+
+
+
+
 /////////////////////////////////////////////////////////////////////////
 
 
@@ -239,37 +276,6 @@ double point:: angle(string str, int start)
 	}
 	return pow;
 }
-
-
-
-
-void point::generate(point &x, point &y, point &z, string a, string b, string c )
-{
-	x.generateLinkList(a);
-	y.generateLinkList(b);
-	z.generateLinkList(c);
-	return;
-}
-
-void point::makingPointsFile(point &x, point &y, point &z, double start, double end)
-{
-	fstream outfile;
-	outfile.open("file.txt",ios::out);
-	//long double Z = -50;
-	for(double i = start; i < end; i += 0.1)
-	{
-		long double X = x.getFinalValue(i);
-		long double Y = y.getFinalValue(i);
-		long double Z = z.getFinalValue(i);
-		outfile<<X<<" ";
-		outfile<<Y<<" ";
-		outfile<<Z<<" ";
-
-	}
-	return;
-}
-
-
 
 
 /////////////////////////////////////////////////////////////////////////

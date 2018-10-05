@@ -17,7 +17,6 @@
 
 using namespace std;
 
-#include <cmath>
 
 class MyGlWindow : public Fl_Gl_Window {
   void draw();
@@ -174,8 +173,14 @@ Fl_Input *zAxis;
    strY = yAxis->value();
    strZ = zAxis->value();
    point a,b,c,p;
+   
+
    p.generate(a,b,c,strX,strY,strZ);
+   
    p.makingPointsFile(a,b,c,-890,890);
+   
+
+
    MyGlWindow ptr;
    ptr.computeCurve();
  }

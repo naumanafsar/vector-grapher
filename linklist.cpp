@@ -6,14 +6,25 @@ using namespace std;
 
 /////////////////////////////////////////////////////////////////////
 
-typedef long double (func::*f)(double,double);
+typedef long double (func::*f)(double,double);   //function pointer
+
+// typedef int (*t_somefunc)(int,int);
+
+// int product(int u, int v) {
+//   return u*v;
+// }
+
+// t_somefunc afunc = &product;
+// ...
+// int x2 = (*afunc)(123, 456); 
+
 
 
 /////////////////////////////////////////////////////////////////////////
 
 struct Node
 {
-	f data;
+	f data;     //function
 	int change;
 	double power;
 	double num;
@@ -242,8 +253,8 @@ long double linklist::get(double num, double specail)
 	{
 		Node *temp;
 		temp = head;
-		f function;
-		func p;
+		f function;    // pointer function
+		func p;        // object of func
 		long double mul = 1;
 		while(temp != NULL)
 		{
